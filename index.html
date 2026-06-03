@@ -1,4 +1,3 @@
-cat > /mnt/user-data/outputs/banned_books_club.html << 'HTMLEOF'
 <!DOCTYPE html>
 <html lang="en">
 <head>
