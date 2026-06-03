@@ -494,11 +494,11 @@
   <div class="meeting-card">
     <div class="meeting-date-box">
       <div class="meeting-month">Jul</div>
-      <div class="meeting-day">17</div>
+      <div class="meeting-day">2</div>
     </div>
     <div class="meeting-info">
-      <div class="mtitle">James and the Giant Peach</div>
-      <div class="mdetail">Roald Dahl · Great for all ages! Snacks provided 🍑</div>
+      <div class="mtitle">An Indigenous Peoples’ History of the United States</div>
+      <div class="mdetail">Roxanne Dunbar-Ortiz (2014)</div>
     </div>
   </div>
 
