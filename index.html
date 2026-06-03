@@ -1,0 +1,584 @@
+cat > /mnt/user-data/outputs/banned_books_club.html << 'HTMLEOF'
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Banned Books Club</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,700;0,900;1,400&family=Lora:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green-dark: #2d6a4f;
+    --green-mid:  #52b788;
+    --green-light: #d8f3dc;
+    --green-pale:  #f0faf3;
+    --yellow: #ffd166;
+    --warm-white: #fffef9;
+    --ink: #1b3a2d;
+    --muted: #5a7a68;
+  }
+
+  body {
+    background: var(--green-pale);
+    color: var(--ink);
+    font-family: 'Nunito', sans-serif;
+    font-size: 17px;
+    line-height: 1.7;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--green-dark);
+    color: var(--warm-white);
+    text-align: center;
+    padding: 64px 24px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -2px; left: 0; right: 0;
+    height: 48px;
+    background: var(--green-pale);
+    clip-path: ellipse(55% 100% at 50% 100%);
+  }
+
+  .hero-emoji {
+    font-size: 64px;
+    display: block;
+    margin-bottom: 16px;
+    animation: bounce 2.5s ease-in-out infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-8px); }
+  }
+
+  .hero h1 {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: clamp(36px, 7vw, 68px);
+    line-height: 1.1;
+    margin-bottom: 16px;
+    letter-spacing: -0.01em;
+  }
+
+  .hero h1 span {
+    color: var(--yellow);
+  }
+
+  .hero-sub {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: clamp(16px, 2.5vw, 22px);
+    color: var(--green-light);
+    max-width: 560px;
+    margin: 0 auto 32px;
+  }
+
+  .hero-badges {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 8px;
+  }
+
+  .badge {
+    background: rgba(255,255,255,0.15);
+    border: 1.5px solid rgba(255,255,255,0.3);
+    border-radius: 999px;
+    padding: 6px 18px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    color: var(--warm-white);
+  }
+
+  /* ── WELCOME ── */
+  .welcome {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 56px 28px 40px;
+    text-align: center;
+  }
+
+  .welcome h2 {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 28px;
+    color: var(--green-dark);
+    margin-bottom: 16px;
+  }
+
+  .welcome p {
+    color: #3a5c47;
+    font-size: 17px;
+    line-height: 1.8;
+  }
+
+  /* ── THREE CARDS ── */
+  .pillars {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 8px 24px 56px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+  }
+
+  .pillar {
+    background: var(--warm-white);
+    border: 2px solid var(--green-light);
+    border-radius: 20px;
+    padding: 30px 26px;
+    text-align: center;
+  }
+
+  .pillar .icon { font-size: 40px; margin-bottom: 12px; display: block; }
+
+  .pillar h3 {
+    font-weight: 900;
+    font-size: 18px;
+    color: var(--green-dark);
+    margin-bottom: 8px;
+  }
+
+  .pillar p { font-size: 15px; color: var(--muted); line-height: 1.65; }
+
+  /* ── GREEN DIVIDER ── */
+  .divider {
+    background: var(--green-mid);
+    color: var(--warm-white);
+    text-align: center;
+    padding: 36px 24px;
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: clamp(17px, 2.5vw, 22px);
+  }
+
+  /* ── BOOK SHELF ── */
+  .shelf {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 56px 24px;
+  }
+
+  .shelf-header {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  .shelf-header h2 {
+    font-weight: 900;
+    font-size: 28px;
+    color: var(--green-dark);
+    margin-bottom: 8px;
+  }
+
+  .shelf-header p {
+    font-size: 15px;
+    color: var(--muted);
+  }
+
+  .book-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+  }
+
+  .book {
+    background: var(--warm-white);
+    border-radius: 16px;
+    border-left: 6px solid var(--green-mid);
+    padding: 20px 20px 20px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .book-title {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--green-dark);
+  }
+
+  .book-author {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+
+  .book-why {
+    margin-top: 8px;
+    font-size: 13px;
+    color: #5a7a68;
+    line-height: 1.5;
+  }
+
+  .book-why strong {
+    color: var(--green-dark);
+    font-weight: 700;
+  }
+
+  /* ── MEETINGS ── */
+  .meetings-bg {
+    background: var(--green-light);
+    padding: 56px 24px;
+  }
+
+  .meetings {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .meetings h2 {
+    font-weight: 900;
+    font-size: 28px;
+    color: var(--green-dark);
+    text-align: center;
+    margin-bottom: 6px;
+  }
+
+  .meetings .sub {
+    text-align: center;
+    font-size: 15px;
+    color: var(--muted);
+    margin-bottom: 32px;
+  }
+
+  .meeting-card {
+    background: var(--warm-white);
+    border-radius: 16px;
+    padding: 20px 24px;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .meeting-date-box {
+    background: var(--green-dark);
+    color: var(--warm-white);
+    border-radius: 12px;
+    padding: 10px 16px;
+    text-align: center;
+    min-width: 72px;
+    flex-shrink: 0;
+  }
+
+  .meeting-month {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--green-light);
+  }
+
+  .meeting-day {
+    font-size: 26px;
+    font-weight: 900;
+    line-height: 1;
+  }
+
+  .meeting-info { flex: 1; }
+
+  .meeting-info .mtitle {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 17px;
+    color: var(--green-dark);
+    font-weight: 600;
+  }
+
+  .meeting-info .mdetail {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  /* ── JOIN ── */
+  .join {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 60px 24px;
+    text-align: center;
+  }
+
+  .join span.wave { font-size: 44px; display: block; margin-bottom: 12px; }
+
+  .join h2 {
+    font-weight: 900;
+    font-size: 28px;
+    color: var(--green-dark);
+    margin-bottom: 12px;
+  }
+
+  .join p {
+    color: var(--muted);
+    font-size: 16px;
+    margin-bottom: 28px;
+    line-height: 1.75;
+  }
+
+  .email-row {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    max-width: 440px;
+    margin: 0 auto;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 16px rgba(45,106,79,0.15);
+  }
+
+  .email-row input {
+    flex: 1;
+    padding: 14px 18px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+    border: 2px solid var(--green-light);
+    border-right: none;
+    border-radius: 12px 0 0 12px;
+    outline: none;
+    color: var(--ink);
+    background: var(--warm-white);
+  }
+
+  .email-row input:focus { border-color: var(--green-mid); }
+
+  .email-row button {
+    padding: 14px 22px;
+    background: var(--green-dark);
+    color: var(--warm-white);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 15px;
+    border: none;
+    border-radius: 0 12px 12px 0;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+
+  .email-row button:hover { background: var(--green-mid); }
+
+  .fine-print {
+    font-size: 12px;
+    color: #a0b8a8;
+    margin-top: 12px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--green-dark);
+    color: var(--green-light);
+    text-align: center;
+    padding: 28px 24px;
+    font-size: 14px;
+    line-height: 1.8;
+  }
+
+  footer strong { color: var(--warm-white); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  section, header, footer {
+    animation: fadeUp 0.5s ease both;
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <span class="hero-emoji">📚</span>
+  <h1>Banned Books<br><span>Club</span></h1>
+  <p class="hero-sub">A friendly group for curious readers of all ages — exploring the books the world tried to hide!</p>
+  <div class="hero-badges">
+    <span class="badge">👴 Retirees welcome</span>
+    <span class="badge">👧 Kids welcome</span>
+    <span class="badge">🌍 All backgrounds</span>
+    <span class="badge">No experience needed!</span>
+  </div>
+</header>
+
+<section class="welcome">
+  <h2>Hello and welcome! 👋</h2>
+  <p>We're a warm, friendly group that loves reading and talking about books together. Each month, we pick a book that was banned somewhere in the world — and we dig into what made it so special (and so surprising!) that someone wanted it kept secret.</p>
+</section>
+
+<section class="pillars">
+  <div class="pillar">
+    <span class="icon">📖</span>
+    <h3>We Read Together</h3>
+    <p>One book a month, chosen by the group. All skill levels and reading paces are welcome!</p>
+  </div>
+  <div class="pillar">
+    <span class="icon">💬</span>
+    <h3>We Chat & Share</h3>
+    <p>Monthly meetings where everyone's voice matters. There are no wrong opinions here!</p>
+  </div>
+  <div class="pillar">
+    <span class="icon">🤔</span>
+    <h3>We Ask Why</h3>
+    <p>Why was it banned? By whom? Were they right? The history is often the best part!</p>
+  </div>
+</section>
+
+<div class="divider">
+  "A book is a dream that you hold in your hands." — Neil Gaiman
+</div>
+
+<section class="shelf">
+  <div class="shelf-header">
+    <h2>Books We've Explored 🗺️</h2>
+    <p>Here are some of the fascinating books we've discussed — and why they were banned!</p>
+  </div>
+  <div class="book-list">
+
+    <div class="book">
+      <span class="book-title">Charlotte's Web</span>
+      <span class="book-author">E.B. White · 1952</span>
+      <p class="book-why"><strong>Banned because:</strong> Some thought animals shouldn't be able to talk in stories. We disagreed — and cried at the ending anyway.</p>
+    </div>
+
+    <div class="book">
+      <span class="book-title">Where the Wild Things Are</span>
+      <span class="book-author">Maurice Sendak · 1963</span>
+      <p class="book-why"><strong>Banned because:</strong> A few folks worried it would give children nightmares. Most kids just loved the adventure!</p>
+    </div>
+
+    <div class="book">
+      <span class="book-title">The Diary of a Young Girl</span>
+      <span class="book-author">Anne Frank · 1947</span>
+      <p class="book-why"><strong>Banned because:</strong> Some found it too sad or mature. We found it incredibly brave and important.</p>
+    </div>
+
+    <div class="book">
+      <span class="book-title">James and the Giant Peach</span>
+      <span class="book-author">Roald Dahl · 1961</span>
+      <p class="book-why"><strong>Banned because:</strong> Too fantastical for some! A boy, a giant peach, and some very friendly bugs. We loved every page.</p>
+    </div>
+
+    <div class="book">
+      <span class="book-title">Fahrenheit 451</span>
+      <span class="book-author">Ray Bradbury · 1953</span>
+      <p class="book-why"><strong>Banned because:</strong> This is a book about burning books — and it was itself banned! You truly can't make it up.</p>
+    </div>
+
+    <div class="book">
+      <span class="book-title">The Wonderful Wizard of Oz</span>
+      <span class="book-author">L. Frank Baum · 1900</span>
+      <p class="book-why"><strong>Banned because:</strong> Some libraries called it "ungodly." We called it a delightful adventure down a yellow brick road!</p>
+    </div>
+
+  </div>
+</section>
+
+<div class="meetings-bg">
+<section class="meetings">
+  <h2>Upcoming Meetings 🗓️</h2>
+  <p class="sub">Every third Thursday at 7 pm · Location sent to members by email</p>
+
+  <div class="meeting-card">
+    <div class="meeting-date-box">
+      <div class="meeting-month">Jul</div>
+      <div class="meeting-day">17</div>
+    </div>
+    <div class="meeting-info">
+      <div class="mtitle">James and the Giant Peach</div>
+      <div class="mdetail">Roald Dahl · Great for all ages! Snacks provided 🍑</div>
+    </div>
+  </div>
+
+  <div class="meeting-card">
+    <div class="meeting-date-box">
+      <div class="meeting-month">Aug</div>
+      <div class="meeting-day">21</div>
+    </div>
+    <div class="meeting-info">
+      <div class="mtitle">The Giver</div>
+      <div class="mdetail">Lois Lowry · A beloved classic — kids and grown-ups adore this one</div>
+    </div>
+  </div>
+
+  <div class="meeting-card">
+    <div class="meeting-date-box">
+      <div class="meeting-month">Sep</div>
+      <div class="meeting-day">18</div>
+    </div>
+    <div class="meeting-info">
+      <div class="mtitle">Harriet the Spy</div>
+      <div class="mdetail">Louise Fitzhugh · Banned for "bad behavior" — we think she's wonderful!</div>
+    </div>
+  </div>
+
+  <div class="meeting-card">
+    <div class="meeting-date-box">
+      <div class="meeting-month">Oct</div>
+      <div class="meeting-day">16</div>
+    </div>
+    <div class="meeting-info">
+      <div class="mtitle">In the Night Kitchen</div>
+      <div class="mdetail">Maurice Sendak · A picture book with quite the history! 🌙</div>
+    </div>
+  </div>
+
+</section>
+</div>
+
+<section class="join">
+  <span class="wave">🌿</span>
+  <h2>Come join us!</h2>
+  <p>Sign up for our email list and we'll send you the next meeting's book, time, and location. It's free, it's fun, and we'd love to have you — whether you're 8 or 88!</p>
+  <div class="email-row">
+    <input type="email" placeholder="your@email.com" aria-label="Your email address">
+    <button onclick="handleJoin(this)">Count me in! 🙋</button>
+  </div>
+  <p class="fine-print">We'll never share your email. Unsubscribe any time. Easy as pie. 🥧</p>
+</section>
+
+<footer>
+  <strong>Banned Books Club</strong><br>
+  Open to everyone · All ages · All backgrounds · All reading speeds<br>
+  Questions? Email us at <strong>hello@bannedbooksclub.org</strong>
+</footer>
+
+<script>
+  function handleJoin(btn) {
+    const input = btn.parentElement.querySelector('input');
+    if (!input.value || !input.value.includes('@')) {
+      input.style.borderColor = '#e07a5f';
+      input.placeholder = 'Oops — can you double-check that email?';
+      setTimeout(() => {
+        input.style.borderColor = '';
+        input.placeholder = 'your@email.com';
+      }, 2000);
+      return;
+    }
+    btn.textContent = "You're in! 🎉";
+    btn.style.background = '#52b788';
+    input.value = '';
+    input.placeholder = 'See you at the next meeting!';
+    setTimeout(() => {
+      btn.textContent = 'Count me in! 🙋';
+      btn.style.background = '';
+      input.placeholder = 'your@email.com';
+    }, 4000);
+  }
+</script>
+
+</body>
+</html>
